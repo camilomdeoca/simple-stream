@@ -1,0 +1,6 @@
+{
+  "serverIP": "127.0.0.1",
+  "serverPort": 3001,
+  "moviesFolder": "/mnt/disk1/Movies/",
+  "thumbnailHeight": 240
+}
