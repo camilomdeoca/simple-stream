@@ -22,6 +22,6 @@ app.get("/list", async (req, res) => {
   sendMoviesList(req, res);
 });
 
-app.listen(config.serverPORT, () => {
-  console.log(`Server running on port: ${port}`);
+app.listen(config.serverPort, () => {
+  console.log(`Server running on port: ${config.serverPort}/`);
 });
