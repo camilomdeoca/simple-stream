@@ -6,9 +6,6 @@ const config = require("../config.json");
 
 const app = express();
 
-const hostname = config.serverIP;
-const port = config.serverPort;
-
 app.get("/movie", (req, res) => {
   streamVideo(req, res);
 });
@@ -25,6 +22,6 @@ app.get("/list", async (req, res) => {
   sendMoviesList(req, res);
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.listen(config.serverPORT, () => {
+  console.log(`Server running on port: ${port}`);
 });
