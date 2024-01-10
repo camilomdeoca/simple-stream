@@ -1,18 +1,16 @@
-const fs = require("fs");
-const path = require("path");
-const ffmpeg = require("fluent-ffmpeg");
-const config = require("../config.json");
+import fs from "fs";
+import path from "path";
+import ffmpeg from "fluent-ffmpeg";
+import config from "../config.json" with { type: "json" };
 
-module.exports = {
-  sendMoviesList,
-};
-
-async function sendMoviesList(req, res) {
-  moviesFolder = config.moviesFolder;
+export async function sendMoviesList(req, res) {
+  const searchQuery = req.query.q;
+  const moviesFolder = config.moviesFolder;
 
   const movieFileNames = fs.readdirSync(moviesFolder);
   const moviesData = [];
 
+  let numOfMoviesInDataArray = 0;
   for (const movieTitle of movieFileNames) {
     const moviePath = path.join(moviesFolder, movieTitle);
     const metadata = await getVideoMetadata(moviePath);
@@ -20,16 +18,20 @@ async function sendMoviesList(req, res) {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes - hours * 60;
     const quality = metadata.quality;
-
-    moviesData.push({
-      title: movieTitle,
-      thumbnail: `/thumb?title=${encodeURIComponent(movieTitle)}`,
-      duration: `${hours}:${String(minutes).padStart(2, "0")}`,
-      quality: `${quality}p`,
-      url: `/movie?title=${encodeURIComponent(movieTitle)}`,
-    });
+    
+    if (searchQuery == undefined || movieTitle.replace(/\.[^/.]+$/, "").includes(searchQuery)) {
+      if (numOfMoviesInDataArray++ >= config.maxSearchResults) {
+        break;
+      }
+      moviesData.push({
+        title: movieTitle,
+        thumbnail: `/thumb?title=${encodeURIComponent(movieTitle)}`,
+        duration: `${hours}:${String(minutes).padStart(2, "0")}`,
+        quality: `${quality}p`,
+        url: `/movie?title=${encodeURIComponent(movieTitle)}`,
+      });
+    }
   }
-
   res.send(moviesData);
 }
 

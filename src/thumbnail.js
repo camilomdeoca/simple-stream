@@ -1,14 +1,10 @@
-const fs = require("fs");
-const path = require("path");
-const ffmpeg = require("fluent-ffmpeg");
-const config = require("../config.json");
+import fs from "fs";
+import path from "path";
+import ffmpeg from "fluent-ffmpeg";
+import config from "../config.json" with { type: "json" };
 
-module.exports = {
-  sendThumbnail,
-};
-
-async function sendThumbnail(req, res) {
-  moviesFolder = config.moviesFolder;
+export async function sendThumbnail(req, res) {
+  const moviesFolder = config.moviesFolder;
   const title = decodeURIComponent(req.query.title);
   const moviePath = path.join(moviesFolder, title);
   console.log(`Generating thumbnail for ${title}`);
@@ -26,7 +22,7 @@ async function sendThumbnail(req, res) {
           resolve();
         })
         .thumbnail({
-          timestamps: ["50%"],
+          timestamps: ["30%"],
           filename: thumbFileName,
           folder: thumbFolder,
           size: `${width}x${height}`,

@@ -1,13 +1,10 @@
-const fs = require("fs");
-const path = require("path");
-const config = require("../config.json");
+import fs from "fs";
+import path from "path";
+import mime from "mime";
+import config from "../config.json" with { type: "json" };
 
-module.exports = {
-  streamVideo,
-};
-
-function streamVideo(req, res) {
-  moviesFolder = config.moviesFolder;
+export function streamVideo(req, res) {
+  const moviesFolder = config.moviesFolder;
   const moviePath = path.join(moviesFolder, decodeURIComponent(req.query.title));
   const stat = fs.statSync(moviePath);
   const fileSize = stat.size;
@@ -25,7 +22,7 @@ function streamVideo(req, res) {
       "Content-Range": `bytes ${start}-${end}/${fileSize}`,
       "Accept-Ranges": "bytes",
       "Content-Length": chunksize,
-      "Content-Type": "video/mp4",
+      "Content-Type": mime.getType(moviePath),
     };
 
     res.writeHead(206, head);

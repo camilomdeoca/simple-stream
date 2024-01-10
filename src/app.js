@@ -1,10 +1,13 @@
-const { streamVideo } = require("./stream.js");
-const { sendThumbnail } = require("./thumbnail.js");
-const { sendMoviesList } = require("./listMovies.js");
-const express = require("express");
-const config = require("../config.json");
+import { streamVideo } from "./stream.js";
+import { sendThumbnail } from "./thumbnail.js";
+import { sendMoviesList } from "./listMovies.js";
+import express from "express";
+import cors from "cors";
+import config from "../config.json" with { type: "json" };
 
 const app = express();
+
+app.use(cors());
 
 app.get("/movie", (req, res) => {
   streamVideo(req, res);
