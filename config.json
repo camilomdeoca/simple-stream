@@ -2,6 +2,8 @@
   "serverIP": "127.0.0.1",
   "serverPort": 3001,
   "moviesFolder": "/mnt/disk1/Movies/",
+  "transcodedMoviesFolder": "/mnt/disk1/Movies/transcoded/",
   "thumbnailHeight": 240,
-  "maxSearchResults": 10
+  "maxSearchResults": 10,
+  "transcodeFormat": ".mp4"
 }

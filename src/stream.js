@@ -3,9 +3,17 @@ import path from "path";
 import mime from "mime";
 import config from "../config.json" with { type: "json" };
 
-export function streamVideo(req, res) {
+export function streamVideo(videoFile, req, res) {
   const moviesFolder = config.moviesFolder;
-  const moviePath = path.join(moviesFolder, decodeURIComponent(req.query.title));
+  const moviePath = videoFile;
+  console.log("STREAM:", moviePath);
+
+  // Validate that file isnt in a folder outside the allowed
+  if (!path.resolve(moviePath).startsWith(path.resolve(config.moviesFolder))) {
+    res.sendStatus(400);
+    return;
+  }
+
   const stat = fs.statSync(moviePath);
   const fileSize = stat.size;
   const range = req.headers.range;
