@@ -41,20 +41,28 @@ export function transcodeVideo(req, res) {
       console.log(`Progress on ${filename}: ${info.percent}%`);
       if (info.percent) {
         console.log("Notifying:", filename, info.percent);
-        for (const socket of filesTranscoding.get(filename).socketsToNotify) {
-          console.log("sending to a socket");
-          socket.send(
-            JSON.stringify({
-              title: filename,
-              progress: info.percent / 100,
-            })
-          );
+        const timeNow = Date.now();
+        const toNotify = filesTranscoding.get(filename).socketsToNotify;
+        for (let i = 0; i < toNotify.length; i++) {
+          if (
+            timeNow - toNotify[i].timeLast > 60 * 1000 ||
+            info.percent / 100 - toNotify[i].valueLast > 0.01
+          ) {
+            toNotify[i].timeLast = timeNow;
+            toNotify[i].valueLast = info.percent / 100;
+            toNotify[i].socket.send(
+              JSON.stringify({
+                title: filename,
+                progress: info.percent / 100,
+              })
+            );
+          }
         }
       }
     })
     .on("end", (err, stdout, stderr) => {
-      for (const socket of filesTranscoding.get(filename).socketsToNotify) {
-        socket.send(
+      for (const elem of filesTranscoding.get(filename).socketsToNotify) {
+        elem.socket.send(
           JSON.stringify({
             filename: filename,
             progress: 1,
