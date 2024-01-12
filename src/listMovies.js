@@ -7,17 +7,25 @@ import config from "../config.json" with { type: "json" };
 
 export async function sendMoviesList(req, res) {
   const searchQuery = req.query.q;
+  const order = req.query.order;
   const moviesFolder = config.moviesFolder;
 
-  const movieFileNames = fs.readdirSync(moviesFolder);
+  let movieFileNames = fs.readdirSync(moviesFolder).filter(filename => {
+    return fs.statSync(path.join(moviesFolder, filename)).isFile();
+  })
+  if (order == "name") {
+    movieFileNames.sort();
+  } else {
+    movieFileNames.sort((a, b) => {
+      return fs.statSync(path.join(moviesFolder, b)).birthtime - fs.statSync(path.join(moviesFolder, a)).birthtime;
+    });
+  }
+
   const moviesData = [];
 
   let numOfMoviesInDataArray = 0;
   for (const movieFilename of movieFileNames) {
     const moviePath = path.join(moviesFolder, movieFilename);
-    if (fs.lstatSync(moviePath).isDirectory()) {
-      continue;
-    }
     const metadata = await getVideoMetadata(moviePath);
     if (metadata === null) {
       continue;
@@ -47,7 +55,7 @@ export async function sendMoviesList(req, res) {
       }
       moviesData.push({
         title: movieFilename,
-        thumbnail: `/thumb?title=${encodeURIComponent(movieFilename)}`,
+        thumbnail: `/thumb/${encodeURIComponent(movieFilename) + ".png"}`,
         duration: `${hours}:${String(minutes).padStart(2, "0")}`,
         quality: `${quality}p`,
         url: url,

@@ -27,7 +27,7 @@ app.get("/transcode", transcodeVideo);
  * always, in the future i may allow for different movie folders so the name of the image cant be
  * the name of the movie file in that case.
  */
-app.get("/thumb", sendThumbnail);
+app.get("/thumb/:file", (req, res) => sendThumbnail(req.params.file, req, res));
 
 app.get("/list", sendMoviesList);
 
