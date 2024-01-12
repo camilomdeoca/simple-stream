@@ -31,6 +31,8 @@ app.get("/thumb/:file", (req, res) => sendThumbnail(req.params.file, req, res));
 
 app.get("/list", sendMoviesList);
 
+app.use(express.static('client/build'));
+
 server.listen(config.serverPort, () => {
   console.log(`Server running on port: ${config.serverPort}`);
 });

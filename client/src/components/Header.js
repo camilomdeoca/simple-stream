@@ -14,7 +14,7 @@ export default function Header({ searchCallback }) {
   return (
     <header className="horizontal-array">
       <p className="header-title">Peliculas</p>
-      <input type="text" onChange={handleSearchInputChange} value={query} placeholder="Search..."></input>
+      <input className="search" type="text" onChange={handleSearchInputChange} value={query} placeholder="Search..."></input>
     </header>
   );
 }

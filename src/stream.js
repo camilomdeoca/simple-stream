@@ -6,7 +6,6 @@ import config from "../config.json" with { type: "json" };
 export function streamVideo(videoFile, req, res) {
   const moviesFolder = config.moviesFolder;
   const moviePath = videoFile;
-  console.log("STREAM:", moviePath);
 
   // Validate that file isnt in a folder outside the allowed
   if (!path.resolve(moviePath).startsWith(path.resolve(config.moviesFolder))) {
@@ -19,7 +18,6 @@ export function streamVideo(videoFile, req, res) {
   const range = req.headers.range;
 
   if (range) {
-    console.log(range);
     let [start, end] = range.replace(/bytes=/, "").split("-");
     start = parseInt(start, 10);
     end = end ? parseInt(end, 10) : fileSize - 1;

@@ -111,6 +111,12 @@ header input[type="text"]:focus {
   margin: auto 1rem auto 0;
 }
 
+/* .search {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+} */
+
 .no-decorations {
   text-decoration: none;
 }
