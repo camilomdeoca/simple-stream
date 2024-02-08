@@ -25,9 +25,13 @@ export default function VideoListItem({
           <p className="video-list-item-text video-list-item-title">
             {title.replace(/\.[^/.]+$/, "")}
           </p>
+    
+          <div className="horizontal-array space-between">
+            <p className="video-list-item-text video-list-item-info">{info}</p>
+            <p className="video-list-item-text video-list-item-info">Jan 10th, 2024</p>
+          </div>
           <div className="horizontal-array space-between">
             <p className="video-list-item-text video-list-item-info">{duration}</p>
-            {info}
             <p className="video-list-item-text video-list-item-info">{quality}</p>
           </div>
         </div>

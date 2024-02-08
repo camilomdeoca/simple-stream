@@ -1,0 +1,76 @@
+@use "../variables" as vars;
+
+.sidebar {
+  background-color: vars.$dark-bg-color;
+}
+
+#burger {
+  color: vars.$dark-fg-color;
+  font-size: 2rem;
+  background: transparent;
+  border: 0;
+  margin: 0 1rem;
+  text-align: right;
+  transition: 0.15s;
+}
+
+#burger:hover {
+  color: vars.$dark-hover-fg-color;
+  transition: 0.15s;
+}
+
+aside.collapsed~div>header {
+  margin-left: 3rem;
+}
+
+aside.collapsed {
+  height: 3.5rem;
+  width: 3rem;
+  box-shadow: none;
+  overflow: clip;
+  position: absolute;
+  z-index: 1;
+}
+
+aside {
+  position: relative;
+  padding-top: 0.5rem;
+  background-color: vars.$dark-bg-color;
+  box-shadow: 0 0 0.2rem 0.2rem vars.$dark-shadow-color;
+  width: vars.$sidebar-width;
+  box-sizing: border-box;
+  height: 100vh;
+}
+
+nav {
+  position: sticky;
+}
+
+nav ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sidebar-link {
+  font-size: x-large;
+  text-decoration: none;
+  display: block;
+  padding: 0.5em 1em 0;
+  color: vars.$dark-fg-color;
+  transition: 0.15s;
+}
+
+.sidebar-link:hover {
+  padding-left: 1.5em;
+  color: vars.$dark-hover-fg-color;
+  transition: 0.15s;
+}
+
+@media screen and (max-width: 30rem) {
+  aside {
+    position: absolute;
+    z-index: 1;
+    width: vars.$sidebar-width-mobile;
+  }
+}
+

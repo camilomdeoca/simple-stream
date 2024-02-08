@@ -4,7 +4,6 @@ import mime from "mime";
 import config from "../config.json" with { type: "json" };
 
 export function streamVideo(videoFile, req, res) {
-  const moviesFolder = config.moviesFolder;
   const moviePath = videoFile;
 
   // Validate that file isnt in a folder outside the allowed

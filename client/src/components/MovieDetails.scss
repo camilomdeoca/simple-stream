@@ -1,0 +1,12 @@
+@use "../variables" as vars;
+
+/* Movie Details */
+.movie-details-title {
+  font-size: 3rem;
+}
+
+.movie-details-image {
+  width: 16rem;
+  object-fit: cover;
+}
+

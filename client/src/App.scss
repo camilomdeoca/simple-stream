@@ -1,0 +1,94 @@
+@use "./variables" as vars;
+
+html {
+  font-family: "Lato", sans-serif;
+  /* text-shadow: 0.1rem 0.1rem 0.15rem var(--light-shadow-color),
+      -0.1rem -0.1rem 0.15rem var(--light-shine-color); */
+}
+
+button {
+  color: inherit;
+  text-shadow: inherit;
+}
+
+.centered-array {
+  width: min(40rem, 90%);
+  margin: 1rem auto;
+}
+
+body {
+  margin: 0;
+  background-color: vars.$light-bg-color;
+}
+
+h1 {
+  font-size: 5rem;
+  text-align: center;
+}
+
+.error-message {
+  text-align: center;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+input[type="radio"] {
+  appearance: none;
+  width: 1rem;
+  aspect-ratio: 1;
+  margin: auto 0.3rem;
+  border: solid 0.1rem vars.$light-bg-color;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: calc(-0.5 * vars.$shadow-radius) calc(-0.5 * vars.$shadow-radius) calc(1 * vars.$shadow-radius) vars.$light-shine-color,
+    calc(0.5 * vars.$shadow-radius) calc(0.5 * vars.$shadow-radius) calc(1 * vars.$shadow-radius) vars.$light-shadow-color;
+}
+
+input[type="radio"]:checked {
+  box-shadow: calc(-0.5 * vars.$shadow-radius) calc(-0.5 * vars.$shadow-radius) calc(1 * vars.$shadow-radius) vars.$light-shine-color,
+    calc(0.5 * vars.$shadow-radius) calc(0.5 * vars.$shadow-radius) calc(1 * vars.$shadow-radius) vars.$light-shadow-color,
+    inset calc(-0.5 * vars.$shadow-radius) calc(-0.5 * vars.$shadow-radius) calc(0.5 * vars.$shadow-radius) vars.$light-inside-shine-color,
+    inset calc(0.5 * vars.$shadow-radius) calc(0.5 * vars.$shadow-radius) calc(0.5 * vars.$shadow-radius) vars.$light-inside-shadow-color;
+}
+
+/* .search {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+} */
+
+.no-decorations {
+  text-decoration: none;
+}
+
+/* button that looks like a link */
+.link-button {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  border-radius: 0;
+  cursor: pointer;
+  width: 100%;
+  font-family: inherit;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.expand {
+  flex-grow: 1;
+}
+
+.horizontal-array {
+  display: flex;
+}
+
+.vertical-array {
+  display: flex;
+  flex-direction: column;
+}
+

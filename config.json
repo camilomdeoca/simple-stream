@@ -6,5 +6,6 @@
   "thumbnailHeight": 240,
   "maxSearchResults": 10,
   "transcodeFormat": ".mp4",
-  "thumbnailFolder": "/mnt/disk1/Movies/thumbnails/"
+  "thumbnailFolder": "/mnt/disk1/Movies/thumbnails/",
+  "omdbapiKey": "42dbafd1"
 }

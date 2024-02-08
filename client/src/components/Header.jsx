@@ -1,3 +1,4 @@
+import "./Header.scss";
 import { useEffect, useState } from "react";
 
 export default function Header({ searchCallback, searchInput }) {

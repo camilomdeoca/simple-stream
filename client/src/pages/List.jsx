@@ -10,12 +10,10 @@ function List() {
   return (
     <div className="vertical-array expand">
       <Header searchCallback={setQuery} searchInput={true} />
-      <main>
-        <div className="vertical-array">
-          <SearchOptions changeOrderCallback={setOrder} />
-          <VideoList query={query} order={order} />
-        </div>
-      </main>
+      <div className="vertical-array centered-array">
+        <SearchOptions changeOrderCallback={setOrder} />
+        <VideoList query={query} order={order} />
+      </div>
     </div>
   );
 };

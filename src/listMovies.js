@@ -10,15 +10,15 @@ export async function sendMoviesList(req, res) {
   const order = req.query.order;
   const moviesFolder = config.moviesFolder;
 
-  let movieFileNames = fs.readdirSync(moviesFolder).filter(filename => {
-    return fs.statSync(path.join(moviesFolder, filename)).isFile();
-  })
+  let movieFileNames = fs.readdirSync(moviesFolder)
+    .filter(filename => fs.statSync(path.join(moviesFolder, filename)).isFile());
+
   if (order == "name") {
     movieFileNames.sort();
   } else {
-    movieFileNames.sort((a, b) => {
-      return fs.statSync(path.join(moviesFolder, b)).birthtime - fs.statSync(path.join(moviesFolder, a)).birthtime;
-    });
+    movieFileNames.sort((a, b) =>
+      fs.statSync(path.join(moviesFolder, b)).birthtime
+      - fs.statSync(path.join(moviesFolder, a)).birthtime);
   }
 
   const moviesData = [];
@@ -26,8 +26,10 @@ export async function sendMoviesList(req, res) {
   let numOfMoviesInDataArray = 0;
   for (const movieFilename of movieFileNames) {
     const moviePath = path.join(moviesFolder, movieFilename);
-    const metadata = await getVideoMetadata(moviePath);
-    if (metadata === null) {
+    let metadata = undefined;
+    try {
+      metadata = await getVideoMetadata(moviePath);
+    } catch (err) {
       continue;
     }
 
@@ -35,11 +37,14 @@ export async function sendMoviesList(req, res) {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes - hours * 60;
     const quality = metadata.quality;
-    const formatState = getFormatState(movieFilename); // transcoding, compatible, transcoded, needs-transcode
+
+    // transcoding, compatible, transcoded, needs-transcode
+    const formatState = getFormatState(movieFilename);
+
     const url =
-      formatState == "compatible"
+      formatState === "compatible"
         ? `/movie/${encodeURIComponent(movieFilename)}`
-        : formatState == "transcoded"
+        : formatState === "transcoded"
           ? `/movie/transcoded/${encodeURIComponent(movieFilename.replace(/\.[^/.]+$/, "") + config.transcodeFormat)}`
           : "";
 
@@ -57,6 +62,7 @@ export async function sendMoviesList(req, res) {
         title: movieFilename,
         thumbnail: `/thumb/${encodeURIComponent(movieFilename) + ".png"}`,
         duration: `${hours}:${String(minutes).padStart(2, "0")}`,
+        modifiedTime: fs.statSync(path.join(moviesFolder, movieFilename)).birthtime,
         quality: `${quality}p`,
         url: url,
         formatState: formatState,
@@ -67,22 +73,18 @@ export async function sendMoviesList(req, res) {
 }
 
 async function getVideoMetadata(path) {
-  let result = null;
-  await new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     ffmpeg.ffprobe(path, (err, metadata) => {
       if (err) {
-        result = null;
-        resolve();
+        reject(err);
+      } else {
+        resolve({
+          seconds: metadata.format.duration,
+          quality: metadata.streams[0].height,
+        });
       }
-
-      result = {
-        seconds: metadata.format.duration,
-        quality: metadata.streams[0].height,
-      };
-      resolve();
     });
   });
-  return result;
 }
 
 function getFormatState(filename) {

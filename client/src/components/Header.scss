@@ -1,0 +1,49 @@
+@use "../variables" as vars;
+
+/* Header */
+header {
+  height: 3rem;
+  color: vars.$dark-fg-color;
+  padding: 0.25rem 1em;
+  background: vars.$dark-bg-color;
+  box-shadow: 0 vars.$shadow-radius calc(2 * vars.$shadow-radius) vars.$light-shadow-color,
+    calc(-1 * vars.$shadow-radius) calc(-1 * vars.$shadow-radius) calc(2 * vars.$shadow-radius) vars.$light-shine-color;
+}
+
+header input[type="text"] {
+  max-width: 20rem;
+  flex-grow: 1;
+  font-family: inherit;
+  color: vars.$dark-fg-color;
+  border: 0;
+  border-radius: vars.$radius;
+  background: vars.$dark-bg-color;
+  margin: 0.4rem auto;
+  padding: 0 1rem;
+  box-shadow: inset vars.$shadow-radius vars.$shadow-radius calc(2 * vars.$shadow-radius) vars.$dark-inside-shadow-color,
+    inset calc(-1 * vars.$shadow-radius) calc(-1 * vars.$shadow-radius) calc(2 * vars.$shadow-radius) vars.$dark-inside-shine-color;
+}
+
+header input[type="text"]:focus {
+  box-shadow: inset vars.$shadow-radius vars.$shadow-radius calc(2 * vars.$shadow-radius) vars.$dark-inside-shadow-color,
+    inset calc(-1 * vars.$shadow-radius) calc(-1 * vars.$shadow-radius) calc(2 * vars.$shadow-radius) vars.$dark-inside-shine-color,
+    0 0 calc(3 * vars.$shadow-radius) vars.$dark-outline-selected-color;
+  outline: none;
+}
+
+.header-title {
+  font-variant: small-caps;
+  font-size: 1.2rem;
+  padding: 0;
+  margin: auto 1rem auto 0;
+}
+
+.search {
+  width: 10rem;
+}
+
+@media screen and (max-width: 30rem) {
+  header {
+    margin-left: 3rem;
+  }
+}

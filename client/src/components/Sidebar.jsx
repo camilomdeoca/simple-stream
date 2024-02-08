@@ -1,6 +1,6 @@
+import "./Sidebar.scss";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "./Sidebar.css";
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(true);
@@ -16,7 +16,7 @@ export default function Sidebar() {
             <Link to="/list" className="sidebar-link">Lista</Link>
           </li>
           <li>
-            <Link to="#" className="sidebar-link">Opciones</Link>
+            <Link to="/details" className="sidebar-link">Details</Link> {/* For testing */}
           </li>
         </ul>
       </nav>

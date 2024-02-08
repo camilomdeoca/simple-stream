@@ -1,0 +1,143 @@
+@use "../variables" as vars;
+
+/* Search Options */
+.options-label {
+  margin-bottom: 1rem;
+}
+
+.option:not(:first-child) {
+  padding-left: 1rem;
+}
+
+/* Video List */
+.video-list-item {
+  height: 8rem;
+  background: vars.$light-bg-color;
+  /* background: linear-gradient(160deg, var(--light-inside-shadow-color), var(--light-inside-shine-color)); */
+  border-radius: vars.$radius;
+  box-shadow: calc(-1 * vars.$shadow-radius) calc(-1 * vars.$shadow-radius) calc(2 * vars.$shadow-radius) vars.$light-shine-color,
+    vars.$shadow-radius vars.$shadow-radius calc(2 * vars.$shadow-radius) vars.$light-shadow-color;
+  display: flex;
+  user-select: none;
+  border: 0.2rem solid vars.$light-bg-color;
+}
+
+a {
+  width: 100%;
+  height: 100%;
+}
+
+.video-list-item:active {
+  /* background: linear-gradient(
+    160deg,
+    var(--light-inside-shadow-color),
+    var(--light-inside-shine-color)
+  ); */
+  box-shadow: calc(-1 * vars.$shadow-radius) calc(-1 * vars.$shadow-radius) calc(2 * vars.$shadow-radius) vars.$light-shine-color,
+    vars.$shadow-radius vars.$shadow-radius calc(2 * vars.$shadow-radius) vars.$light-shadow-color,
+    inset calc(-1 * vars.$shadow-radius) calc(-1 * vars.$shadow-radius) calc(2 * vars.$shadow-radius) vars.$light-inside-shine-color,
+    inset vars.$shadow-radius vars.$shadow-radius calc(2 * vars.$shadow-radius) vars.$light-inside-shadow-color;
+}
+
+.video-list ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.video-list li:not(:last-child) {
+  margin-bottom: 1em;
+}
+
+.video-list li {
+  position: relative;
+}
+
+.video-list-item-preview-image {
+  width: 12rem;
+  object-fit: cover;
+  margin: 0.2rem;
+  border-radius: calc(vars.$radius - 0.15rem);
+}
+
+.video-list-item-text {
+  margin: 0.6rem 0.6rem;
+}
+
+.video-list-item-title {
+  color: vars.$light-fg-color;
+  text-align: left;
+  font-size: 1.2rem;
+  flex-grow: 1;
+}
+
+.video-list-item-info {
+  color: vars.$light-fg-color-disabled;
+  font-size: small;
+}
+
+.warning-text {
+  color: vars.$light-fg-color-disabled;
+  margin: auto 0;
+  font-size: small;
+}
+
+progress {
+  width: min(100%, 12rem);
+  height: 1rem;
+  margin: auto 0;
+  background: transparent;
+  border-radius: vars.$radius;
+  border: none;
+  box-shadow: inset vars.$shadow-radius vars.$shadow-radius calc(2 * vars.$shadow-radius) vars.$light-inside-shadow-color,
+    inset calc(-1 * vars.$shadow-radius) calc(-1 * vars.$shadow-radius) calc(2 * vars.$shadow-radius) vars.$light-inside-shine-color;
+}
+
+progress::-webkit-progress-bar {
+  background-color: transparent;
+}
+
+progress::-webkit-progress-value {
+  background: linear-gradient(165deg, #2d5c8b, #4c92d8);
+  border-radius: vars.$radius;
+}
+
+progress::-moz-progress-bar {
+  background: linear-gradient(165deg, #2d5c8b, #4c92d8);
+  border-radius: vars.$radius;
+}
+
+.video-list-item button {
+  background: linear-gradient(160deg,
+      vars.$light-inside-shine-color,
+      vars.$light-inside-shadow-color);
+  border: none;
+  border-radius: vars.$radius;
+  box-shadow: calc(-1 * vars.$shadow-radius) calc(-1 * vars.$shadow-radius) calc(2 * vars.$shadow-radius) vars.$light-shine-color,
+    vars.$shadow-radius vars.$shadow-radius calc(2 * vars.$shadow-radius) vars.$light-shadow-color;
+}
+
+.video-list-item button:active {
+  background: linear-gradient(160deg,
+      vars.$light-inside-shadow-color,
+      vars.$light-inside-shine-color);
+}
+
+
+@media screen and (max-width: 30rem) {
+  .video-list-item {
+    height: 6rem;
+  }
+
+  .video-list-item-preview-image {
+    max-width: 8rem;
+  }
+
+  .video-list-item-title {
+    font-size: 0.85rem;
+    overflow: hidden;
+  }
+
+  .video-list-item-info {
+    font-size: x-small;
+  }
+}

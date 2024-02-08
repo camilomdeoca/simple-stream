@@ -1,3 +1,4 @@
+import "./VideoList.scss";
 import VideoListItem from "./VideoListItem";
 import { useState, useEffect } from "react";
 
@@ -92,9 +93,9 @@ export default function VideoList({ query, order }) {
             moviesData.map((elem) => {
               return elem.title === data.title
                 ? {
-                    ...elem,
-                    formatState: "transcoding",
-                  }
+                  ...elem,
+                  formatState: "transcoding",
+                }
                 : elem;
             })
           );
