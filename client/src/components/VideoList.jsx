@@ -17,7 +17,7 @@ export default function VideoList({ query, order }) {
 
   function getMoviesList(query, order) {
     setDataIsFor({ query: query, order: order });
-    const toFetchURL = new URL("list", "http://" + process.env.REACT_APP_VIDEO_SERVER_URL);
+    const toFetchURL = new URL("api/list", "http://" + process.env.REACT_APP_VIDEO_SERVER_URL);
 
     if (query) {
       toFetchURL.searchParams.append("q", query);
@@ -38,7 +38,6 @@ export default function VideoList({ query, order }) {
   useEffect(() => {
     const onMessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log(data);
       setMoviesInProgress(
         (moviesInProgress) => new Map(moviesInProgress.set(data.title, { progress: data.progress }))
       );
@@ -59,9 +58,7 @@ export default function VideoList({ query, order }) {
 
   function getTranscodeProgressOfExisting(moviesData) {
     return waitForOpenSocket(socket).then(() => {
-      console.log(moviesData);
       for (const data of moviesData) {
-        console.log(data.title, " ", data.formatState);
         if (data.formatState === "transcoding" && !moviesWithProgressRequested.has(data.title)) {
           console.log("registering for getting", data.title, "progress");
           requestProgressFor(data.title);
@@ -84,9 +81,9 @@ export default function VideoList({ query, order }) {
     let transcodeProgress = undefined;
     if (data.formatState === "needs-transcode") {
       requestTranscodeCallback = () => {
-        const transcodeURL = new URL("transcode", "http://" + process.env.REACT_APP_VIDEO_SERVER_URL);
+        const transcodeURL = new URL("api/transcode", "http://" + process.env.REACT_APP_VIDEO_SERVER_URL);
         transcodeURL.searchParams.append("title", data.title);
-        fetch(transcodeURL).then((result) => {
+        fetch(transcodeURL).then(() => {
           console.log("Requested transcode for:", data.title);
           requestProgressFor(data.title);
           setMoviesData((moviesData) =>
@@ -114,6 +111,7 @@ export default function VideoList({ query, order }) {
           duration={data.duration}
           quality={data.quality}
           url={new URL(data.url, "http://" + process.env.REACT_APP_VIDEO_SERVER_URL).href}
+          linkToDetails={data.detailsUrl}
           formatState={data.formatState}
           transcodeProgress={transcodeProgress}
           requestTranscodeCallback={requestTranscodeCallback}

@@ -33,7 +33,6 @@ export function streamVideo(videoFile, req, res) {
     res.writeHead(206, head);
     file.pipe(res);
   } else {
-    console.log("no range :c");
     const head = {
       "Accept-Ranges": "bytes",
       "Content-Length": fileSize,

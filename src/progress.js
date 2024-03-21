@@ -28,7 +28,7 @@ export function handleProgressConnection(socket) {
   });
   socket.on("close", (event) => {
     for (const [_, fileProgressData] of filesTranscoding) {
-      fileProgressData.socketsToNotify.filter(elem => elem.socket.WebSocket !== socket.WebSocket);
+      fileProgressData.socketsToNotify = fileProgressData.socketsToNotify.filter(elem => elem.socket.WebSocket !== socket.WebSocket);
     }
   });
 }

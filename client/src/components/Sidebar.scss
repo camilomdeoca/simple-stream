@@ -33,12 +33,13 @@ aside.collapsed {
 }
 
 aside {
-  position: relative;
+  position: fixed;
   padding-top: 0.5rem;
   background-color: vars.$dark-bg-color;
   box-shadow: 0 0 0.2rem 0.2rem vars.$dark-shadow-color;
   width: vars.$sidebar-width;
   box-sizing: border-box;
+  z-index: 1;
   height: 100vh;
 }
 
@@ -68,8 +69,6 @@ nav ul {
 
 @media screen and (max-width: 30rem) {
   aside {
-    position: absolute;
-    z-index: 1;
     width: vars.$sidebar-width-mobile;
   }
 }

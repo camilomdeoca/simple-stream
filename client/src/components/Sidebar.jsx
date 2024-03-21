@@ -10,13 +10,10 @@ export default function Sidebar() {
         <input type="button" id="burger" value="☰" onClick={() => { setCollapsed(collapsed => !collapsed); }}></input>
         <ul>
           <li>
-            <Link to="/" className="sidebar-link">Inicio</Link>
+            <Link to="/" className="sidebar-link">Home</Link>
           </li>
           <li>
-            <Link to="/list" className="sidebar-link">Lista</Link>
-          </li>
-          <li>
-            <Link to="/details" className="sidebar-link">Details</Link> {/* For testing */}
+            <Link to="/list" className="sidebar-link">List</Link>
           </li>
         </ul>
       </nav>

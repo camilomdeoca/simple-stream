@@ -43,9 +43,9 @@ export async function sendMoviesList(req, res) {
 
     const url =
       formatState === "compatible"
-        ? `/movie/${encodeURIComponent(movieFilename)}`
+        ? `/api/movie/${encodeURIComponent(movieFilename)}`
         : formatState === "transcoded"
-          ? `/movie/transcoded/${encodeURIComponent(movieFilename.replace(/\.[^/.]+$/, "") + config.transcodeFormat)}`
+          ? `/api/movie/transcoded/${encodeURIComponent(movieFilename.replace(/\.[^/.]+$/, "") + config.transcodeFormat)}`
           : "";
 
     if (
@@ -60,12 +60,13 @@ export async function sendMoviesList(req, res) {
       }
       moviesData.push({
         title: movieFilename,
-        thumbnail: `/thumb/${encodeURIComponent(movieFilename) + ".png"}`,
+        thumbnail: `/api/thumb/${encodeURIComponent(movieFilename) + ".png"}`,
         duration: `${hours}:${String(minutes).padStart(2, "0")}`,
         modifiedTime: fs.statSync(path.join(moviesFolder, movieFilename)).birthtime,
         quality: `${quality}p`,
         url: url,
         formatState: formatState,
+        detailsUrl: `/details/${encodeURIComponent(movieFilename.replace(/\.[^/.]+$/, ""))}`
       });
     }
   }

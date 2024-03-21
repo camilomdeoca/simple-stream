@@ -8,15 +8,13 @@ import Details from "./pages/Details";
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
-        <div className="horizontal-array">
-          <Sidebar />
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route path="/list" element={<List />} />
-            <Route path="/details" element={<Details />} />
-          </Routes>
-        </div>
+      <div className="App horizontal-array">
+        <Sidebar />
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/list" element={<List />} />
+          <Route path="/details/:title" element={<Details />} />
+        </Routes>
       </div>
     </BrowserRouter>
   );

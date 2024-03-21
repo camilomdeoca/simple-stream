@@ -1,14 +1,32 @@
-import { useSearchParams } from "react-router-dom";
 import Header from "../components/Header";
 import ErrorComponent from "../components/ErrorComponent";
 import MovieDetails from "../components/MovieDetails";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 function Details() {
   const [details, setDetails] = useState(undefined);
-  const [searchParams, _] = useSearchParams();
+  let { title } = useParams();
 
-  const movieTitle = searchParams.get("title");
+  const movieTitle = title;
+
+  const toFetchURL = new URL("api/details", "http://" + process.env.REACT_APP_VIDEO_SERVER_URL);
+  if (movieTitle) {
+    toFetchURL.searchParams.append("title", movieTitle);
+  }
+
+  useEffect(() => {
+    if (movieTitle != null) {
+      fetch(toFetchURL)
+        .then((result) => result.json())
+        .then(data => {
+          setDetails(_ => data);
+        })
+        .catch((err) => {
+          console.warn(err);
+        });
+    }
+  }, [toFetchURL, setDetails, movieTitle]);
 
   if (movieTitle == null) {
     return (
@@ -18,19 +36,6 @@ function Details() {
       </div>
     );
   }
-
-  const toFetchURL = new URL("details", "http://" + process.env.REACT_APP_VIDEO_SERVER_URL);
-  toFetchURL.searchParams.append("title", movieTitle);
-
-  fetch(toFetchURL)
-    .then((result) => result.json())
-    .then(data => {
-      setDetails(data);
-    })
-    .catch((err) => {
-      console.warn(err);
-    });
-
   if (details)
     return (
       <div className="vertical-array expand">
