@@ -1,6 +1,8 @@
 
 # Simple Video Streaming App
 
+![Screenshot](images/screenshot.png)
+
 ### Features
 
 * Transcode videos using [fluent-ffmpeg](https://www.npmjs.com/package/fluent-ffmpeg) to `.mp4`
