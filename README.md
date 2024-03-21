@@ -1,5 +1,5 @@
 
-# Simple Video Streaming App
+# Simple React Video Streaming App
 
 ![Screenshot](images/screenshot.png)
 
